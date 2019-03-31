@@ -16,7 +16,7 @@
 	    # if a user has more than one entry in AD our AD Obj will return double values.
 	    if ($ADUser -is [array]) { $ADUser = $ADUser[0] }
 	    if ($ADUser) {
-		$Domain = Get-ADUserDomain $ADUser
+		$Domain = Get-ADDomainName $ADUser
 		Update-SFMail $SFUser $ADUser
 		Update-ADEmployeeID $SFUser $ADUser $Domain
 		Update-ADTitle $SFUser $ADUser $Domain
