@@ -2,12 +2,8 @@ function Test-SFADSync {
     [cmdletbinding(SupportsShouldProcess)]
     param(
 	[Parameter(ValueFromPipeline)]
-	[object]$SFUser
+	[object[]]$SFUser
     )
-
-    begin {
-	$Users = @()
-    }
 
     process {
 	if ($ADUser = Get-ADUserByName $SFUser.Name) {
@@ -21,13 +17,7 @@ function Test-SFADSync {
 		"AD Created"	= $ADUser.whenCreated | Get-Date -UFormat "%Y-%m-%d %H:%M"
 		"SF Created"	= $SFUser.CreatedDate | Get-Date -UFormat "%Y-%m-%d %H:%M"
 	    }
-	    $User = New-Object PSObject -Property $Properties
-	    $Users += $User
+	    New-Object PSObject -Property $Properties
 	}
-    }
-
-    end {
-	$Keys = @($Properties.Keys)
-	$Users | Format-Table $Keys
     }
 }
