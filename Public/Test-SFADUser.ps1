@@ -28,7 +28,7 @@ function Test-SFADUser {
     [CmdletBinding(SupportsShouldProcess)]
     param (
 	[Parameter(Mandatory,ValueFromPipeline)]
-	[object[]]$SFUser,
+	[object]$SFUser,
 	[switch]$All,
 	[switch]$Terse,
 	[switch]$IsInAD
@@ -49,7 +49,7 @@ function Test-SFADUser {
 
 	if ($All) {
 	    $SFUser = Get-SFUserByID $SFUser.Id
-	    Merge-Objects -ObjectOne $SFUser -ObjectTwo $ADUser
+	    Merge-Objects -ObjectOne $SFUser -ObjectTwo $ADUser -PrefixOne "SF" -PrefixTwo "AD"
 	} elseif ($Terse) {
 	    $Properties = [ordered]@{
 		"SF Name"       = $SFUser.Name
